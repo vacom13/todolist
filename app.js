@@ -1,5 +1,5 @@
 //jshint esversion:6
-
+const { config } = require('dotenv');
 const express = require("express");
 const bodyParser= require("body-parser");
 const mongoose = require("mongoose");
@@ -7,11 +7,13 @@ const date = require(__dirname + "/date.js");
 const _ = require("lodash");
 const app = express();
 
+config()
+const PASS=process.env.DBPASSWORD
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 let day= date.getDate();
-mongoose.connect("mongodb+srv://admin-vansh:test123@cluster0.drf9btt.mongodb.net/todolistDB");
+mongoose.connect(`mongodb+srv://admin-vansh:${PASS}@cluster0.drf9btt.mongodb.net/todolistDB`);
 
 const todoListSchema = new mongoose.Schema({
     name: String,
